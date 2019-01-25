@@ -42,9 +42,12 @@ var options = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        loader: "style-loader!css-loader",
-        exclude: /node_modules/
+        test: /(\.css$)/,
+        loaders: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: "url-loader?limit=100000"
       },
       {
         test: /.jsx?$/,

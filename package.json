@@ -25,7 +25,10 @@
     "write-file-webpack-plugin": "4.5.0"
   },
   "dependencies": {
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "antd": "^3.12.4",
+    "postcss-loader": "^3.0.0",
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1",
+    "url-loader": "^1.1.2"
   }
 }

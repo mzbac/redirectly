@@ -46,19 +46,19 @@ export default Form.create({ name: "form" })(props => {
         label="Enable"
         style={{ textAlign: "left" }}
       >
-        {getFieldDecorator("enable", { valuePropName: "checked" })(<Switch />)}
+        <Switch />
       </Form.Item>
       <Form.Item
         {...formItemLayout}
         label="Tab URL"
         style={{ textAlign: "left" }}
       >
-        {getFieldDecorator("tabUrl")(<Input />)}
+        <Input />
       </Form.Item>
       <h3>Overrides:</h3>
-      <Override getFieldDecorator={getFieldDecorator} fieldId="field1" />
+      <Override />
       <h3>Headers:</h3>
-      <Header getFieldDecorator={getFieldDecorator} fieldId="field1" />
+      <Header />
       <Row>
         <Col span={12}>
           <Form.Item>

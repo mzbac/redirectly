@@ -2,17 +2,17 @@ import React from "react";
 import { Form, Input, Button, Row, Col } from "antd";
 
 export default props => {
-  const { getFieldDecorator, fieldId, onDelete } = props;
+  const { onDelete } = props;
   return (
     <Row>
       <Col span={11}>
         <Form.Item>
-          {getFieldDecorator(fieldId)(<Input placeholder="name" />)}
+          <Input placeholder="name" />
         </Form.Item>
       </Col>
       <Col span={11}>
         <Form.Item wrapperCol={{ style: { marginLeft: 15 } }}>
-          {getFieldDecorator(fieldId)(<Input placeholder="value" />)}
+          <Input placeholder="value" />
         </Form.Item>
       </Col>
       <Col span={2}>

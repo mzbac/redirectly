@@ -1,6 +1,9 @@
 import React from "react";
 import { Form, Input, Switch, Button, Icon, Row, Col } from "antd";
 import "./Form.css";
+import Override from "./Overide";
+import Header from "./Header";
+
 export default Form.create({ name: "form" })(props => {
   const { form } = props;
   const { getFieldDecorator } = form;
@@ -52,23 +55,10 @@ export default Form.create({ name: "form" })(props => {
       >
         {getFieldDecorator("tabUrl")(<Input />)}
       </Form.Item>
-      <Row>
-        <Col span={11}>
-          <Form.Item>
-            {getFieldDecorator(`field-1`)(<Input placeholder="from" />)}
-          </Form.Item>
-        </Col>
-        <Col span={11}>
-          <Form.Item wrapperCol={{ style: { marginLeft: 15 } }}>
-            {getFieldDecorator(`field-2`)(<Input placeholder="to" />)}
-          </Form.Item>
-        </Col>
-        <Col span={2}>
-          <Form.Item wrapperCol={{ style: { textAlign: "center" } }}>
-            <Button shape="circle" icon="close" style={{ border: "none" }} />
-          </Form.Item>
-        </Col>
-      </Row>
+      <h3>Overrides:</h3>
+      <Override getFieldDecorator={getFieldDecorator} fieldId="field1" />
+      <h3>Headers:</h3>
+      <Header getFieldDecorator={getFieldDecorator} fieldId="field1" />
       <Row>
         <Col span={12}>
           <Form.Item>

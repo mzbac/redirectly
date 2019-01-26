@@ -109,7 +109,7 @@ export default props => {
           }}
         />
       </Form.Item> */}
-      {overrides.length > 0 ? <h3>Overrides:</h3> : null}
+      {overrides.length > 0 ? <h3>Redirects:</h3> : null}
       {overrides.map((elm, i) => {
         return (
           <Override
@@ -143,7 +143,7 @@ export default props => {
               }}
               style={{ width: "80%" }}
             >
-              <Icon type="plus" /> Add overrides
+              <Icon type="plus" /> Add redirects
             </Button>
           </Form.Item>
         </Col>

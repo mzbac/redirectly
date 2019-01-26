@@ -1,52 +1,48 @@
 import "../img/icon.png";
-const map = {
-  target: "",
-  destination: "",
-  headers: ""
-};
-const callback = e => {
-  if (map.target && map.destination && e.url === map.target) {
-    return {
-      redirectUrl: map.destination
-    };
+let redirctlyConfig = {};
+
+const onBeforeRequestCallback = e => {
+  if (redirctlyConfig.enable) {
+    const match = redirctlyConfig.overrides.find(element => {
+      return element.from === e.url;
+    });
+    if (match)
+      return {
+        redirectUrl: match.to
+      };
   }
 };
 const filter = { urls: ["<all_urls>"] };
-const opt_extraInfoSpec = ["blocking"];
 
-chrome.webRequest.onBeforeRequest.addListener(
-  callback,
-  filter,
-  opt_extraInfoSpec
-);
-chrome.webRequest.onBeforeSendHeaders.addListener(
-  e => {
-    if (map.target && map.headers && e.url === map.target) {
-      const headerPair = map.headers.split(",");
-      const headers = headerPair.reduce((acc, cur) => {
-        const pair = cur.split("=");
-        const header = {
-          name: pair[0],
-          value: pair[1]
-        };
-        acc.push(header);
-        return acc;
-      }, []);
+const onBeforeSendHeadersCallback = e => {
+  if (redirctlyConfig.enable) {
+    e.requestHeaders = [...e.requestHeaders, ...redirctlyConfig.headers];
 
-      e.requestHeaders = [...e.requestHeaders, ...headers];
+    return { requestHeaders: e.requestHeaders };
+  }
+};
 
-      return { requestHeaders: e.requestHeaders };
-    }
-  },
-  filter,
-  ["blocking", "requestHeaders"]
-);
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (!sender.tab) {
     if (request.redirctly) {
-      map.target = request.redirctly.target;
-      map.destination = request.redirctly.destination;
-      map.headers = request.redirctly.headers;
+      redirctlyConfig = { ...request.redirctly };
+      chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestCallback);
+      chrome.webRequest.onBeforeSendHeaders.removeListener(
+        onBeforeSendHeadersCallback
+      );
+
+      if (request.redirctly.enable) {
+        chrome.webRequest.onBeforeRequest.addListener(
+          onBeforeRequestCallback,
+          filter,
+          ["blocking"]
+        );
+        chrome.webRequest.onBeforeSendHeaders.addListener(
+          onBeforeSendHeadersCallback,
+          filter,
+          ["blocking", "requestHeaders"]
+        );
+      }
     }
     sendResponse({ success: true });
   }

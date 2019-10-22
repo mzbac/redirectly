@@ -3,9 +3,11 @@ let redirctlyConfig = {};
 
 const onBeforeRequestCallback = e => {
   if (redirctlyConfig.enable) {
-    const match = redirctlyConfig.overrides.find(element => {
-      return element.from === e.url;
-    });
+    const match = redirctlyConfig.overrides
+      .filter(override => override.isEnabled)
+      .find(element => {
+        return element.from === e.url;
+      });
     if (match)
       return {
         redirectUrl: match.to
@@ -16,7 +18,10 @@ const filter = { urls: ["<all_urls>"] };
 
 const onBeforeSendHeadersCallback = e => {
   if (redirctlyConfig.enable) {
-    e.requestHeaders = [...e.requestHeaders, ...redirctlyConfig.headers];
+    e.requestHeaders = [
+      ...e.requestHeaders,
+      ...redirctlyConfig.headers.filter(header => header.isEnabled)
+    ];
 
     return { requestHeaders: e.requestHeaders };
   }

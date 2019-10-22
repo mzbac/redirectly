@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Switch, Button, Icon, Row, Col } from "antd";
+import { Form, Switch, Button, Icon, Row, Col } from "antd";
 import "./Form.css";
 import Override from "./Overide";
 import Header from "./Header";
@@ -39,7 +39,6 @@ export default props => {
   };
 
   const [switchValue, setSwitchValue] = useState(props.formData.enable);
-  // const [TabUrlValue, setTabUrlValue] = useState(props.formData.target);
   const [overrides, setOverrides] = useState(props.formData.overrides);
   const [headers, setHeaders] = useState(props.formData.headers);
   const [saving, setSaving] = useState(false);
@@ -69,7 +68,6 @@ export default props => {
     chrome.runtime.sendMessage(
       {
         redirctly: {
-          // target: TabUrlValue,
           enable: switchValue,
           overrides: overrides,
           headers: headers
@@ -95,20 +93,6 @@ export default props => {
           }}
         />
       </Form.Item>
-      {/* <Form.Item
-        {...formItemLayout}
-        label="Tab URL"
-        style={{ textAlign: "left" }}
-      >
-        <Input
-          value={TabUrlValue}
-          onChange={e => {
-            e.preventDefault();
-            setTabUrlValue(e.target.value);
-            chrome.storage.sync.set({ target: e.target.value });
-          }}
-        />
-      </Form.Item> */}
       {overrides.length > 0 ? <h3>Redirects:</h3> : null}
       {overrides.map((elm, i) => {
         return (

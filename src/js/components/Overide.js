@@ -1,12 +1,22 @@
 import React from "react";
-import { Form, Input, Button, Row, Col } from "antd";
+import { Form, Input, Button, Row, Col, Switch } from "antd";
 
 export default props => {
   const { onDelete, id, override, setOverride } = props;
-
+  const { isEnabled = true } = override;
   return (
     <Row>
-      <Col span={11}>
+      <Col span={2}>
+        <Form.Item>
+          <Switch
+            checked={isEnabled}
+            onChange={checked => {
+              setOverride(id, { isEnabled: checked });
+            }}
+          />
+        </Form.Item>
+      </Col>
+      <Col span={10}>
         <Form.Item>
           <Input
             placeholder="from"
@@ -18,7 +28,7 @@ export default props => {
           />
         </Form.Item>
       </Col>
-      <Col span={11}>
+      <Col span={10}>
         <Form.Item wrapperCol={{ style: { marginLeft: 15 } }}>
           <Input
             placeholder="to"

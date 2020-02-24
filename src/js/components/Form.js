@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useLocalStorage } from "react-use";
+
 import { Form, Switch, Button, Icon, Row, Col } from "antd";
 import "./Form.css";
 import Override from "./Overide";
@@ -37,47 +39,37 @@ export default props => {
       }
     }
   };
+  const [enable, setEnable] = useLocalStorage("redirectly-enable", false);
+  const [overrides, setOverrides] = useLocalStorage("redirectly-overrides", []);
+  const [headers, setHeaders] = useLocalStorage("redirectly-headers", []);
+  useEffect(() => {
+    chrome.runtime.sendMessage({
+      redirctly: {
+        enable: enable,
+        overrides: overrides,
+        headers: headers
+      }
+    });
+  }, [enable, overrides, headers]);
 
-  const [switchValue, setSwitchValue] = useState(props.formData.enable);
-  const [overrides, setOverrides] = useState(props.formData.overrides);
-  const [headers, setHeaders] = useState(props.formData.headers);
-  const [saving, setSaving] = useState(false);
   const setOverride = (id, override) => {
     overrides[id] = { ...overrides[id], ...override };
-    setOverrides(overrides);
-    chrome.storage.sync.set({ overrides });
+    setOverrides([...overrides]);
   };
   const deleteOverride = id => {
     overrides.splice(id, 1);
     setOverrides(overrides);
-    chrome.storage.sync.set({ overrides });
   };
 
   const setHeader = (id, header) => {
     headers[id] = { ...headers[id], ...header };
-    setHeaders(headers);
-    chrome.storage.sync.set({ headers });
+    setHeaders([...headers]);
   };
   const deleteHeader = id => {
     headers.splice(id, 1);
-    setHeaders(headers);
-    chrome.storage.sync.set({ headers });
+    setHeaders([...headers]);
   };
-  const onSave = () => {
-    setSaving(true);
-    chrome.runtime.sendMessage(
-      {
-        redirctly: {
-          enable: switchValue,
-          overrides: overrides,
-          headers: headers
-        }
-      },
-      () => {
-        setSaving(false);
-      }
-    );
-  };
+
   return (
     <Form className="form">
       <Form.Item
@@ -86,10 +78,9 @@ export default props => {
         style={{ textAlign: "left" }}
       >
         <Switch
-          checked={switchValue}
+          checked={enable}
           onChange={checked => {
-            setSwitchValue(checked);
-            chrome.storage.sync.set({ enable: checked });
+            setEnable(checked);
           }}
         />
       </Form.Item>
@@ -145,11 +136,6 @@ export default props => {
           </Form.Item>
         </Col>
       </Row>
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" icon="save" size="large" onClick={onSave}>
-          {saving ? "Saving" : "Save"}
-        </Button>
-      </Form.Item>
     </Form>
   );
 };

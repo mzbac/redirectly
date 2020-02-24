@@ -4,7 +4,7 @@ let redirctlyConfig = {};
 const onBeforeRequestCallback = e => {
   if (redirctlyConfig.enable) {
     const match = redirctlyConfig.overrides
-      .filter(override => override.isEnabled)
+      .filter(override => override.enabled)
       .find(element => {
         return element.from === e.url;
       });
@@ -18,12 +18,23 @@ const filter = { urls: ["<all_urls>"] };
 
 const onBeforeSendHeadersCallback = e => {
   if (redirctlyConfig.enable) {
-    e.requestHeaders = [
-      ...e.requestHeaders,
-      ...redirctlyConfig.headers.filter(header => header.isEnabled)
-    ];
-
-    return { requestHeaders: e.requestHeaders };
+    const newHeaders = redirctlyConfig.headers
+      .filter(header => header.enabled)
+      .map(h => {
+        const { enabled, ...rest } = h;
+        return rest;
+      });
+    const map = {};
+    e.requestHeaders.forEach(kv => (map[kv.name] = kv.value));
+    newHeaders.forEach(kv => (map[kv.name] = kv.value));
+    const headers = [];
+    Object.keys(map).map(key => {
+      headers.push({
+        name: key,
+        value: map[key]
+      });
+    });
+    return { requestHeaders: headers };
   }
 };
 

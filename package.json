@@ -1,9 +1,9 @@
 {
   "name": "redirectly",
-  "version": "1.1.1",
+  "version": "1.1.4",
   "description": "chrome extension for web development ",
   "scripts": {
-    "build": "node utils/build.js",
+    "build": "NODE_ENV=production node utils/build.js",
     "start": "NODE_ENV=production node utils/webserver.js"
   },
   "devDependencies": {
@@ -25,10 +25,11 @@
     "write-file-webpack-plugin": "4.5.0"
   },
   "dependencies": {
-    "antd": "^3.12.4",
+    "antd": "^3.26.12",
     "postcss-loader": "^3.0.0",
     "react": "^16.8.0-alpha.1",
     "react-dom": "^16.8.0-alpha.1",
+    "react-use": "^13.26.1",
     "url-loader": "^1.1.2"
   }
 }

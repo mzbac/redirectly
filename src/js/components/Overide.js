@@ -1,17 +1,16 @@
 import React from "react";
 import { Form, Input, Button, Row, Col, Switch } from "antd";
-
 export default props => {
   const { onDelete, id, override, setOverride } = props;
-  const { isEnabled = true } = override;
+  const { enabled } = override;
   return (
     <Row>
       <Col span={2}>
         <Form.Item>
           <Switch
-            checked={isEnabled}
-            onChange={checked => {
-              setOverride(id, { isEnabled: checked });
+            checked={enabled}
+            onClick={checked => {
+              setOverride(id, { enabled: checked });
             }}
           />
         </Form.Item>

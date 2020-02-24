@@ -3,15 +3,15 @@ import { Form, Input, Button, Row, Col, Switch } from "antd";
 
 export default props => {
   const { id, onDelete, header, setHeader } = props;
-  const { isEnabled = true } = header;
+  const { enabled } = header;
   return (
     <Row>
       <Col span={2}>
         <Form.Item>
           <Switch
-            checked={isEnabled}
+            checked={enabled}
             onChange={checked => {
-              setHeader(id, { isEnabled: checked });
+              setHeader(id, { enabled: checked });
             }}
           />
         </Form.Item>

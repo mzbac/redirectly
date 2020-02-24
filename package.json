@@ -30,6 +30,7 @@
     "react": "^16.8.0-alpha.1",
     "react-dom": "^16.8.0-alpha.1",
     "react-use": "^13.26.1",
+    "serialize-javascript": "^3.0.0",
     "url-loader": "^1.1.2"
   }
 }

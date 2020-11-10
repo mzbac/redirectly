@@ -58,7 +58,7 @@ export default props => {
   };
   const deleteOverride = id => {
     overrides.splice(id, 1);
-    setOverrides(overrides);
+    setOverrides([...overrides]);
   };
 
   const setHeader = (id, header) => {

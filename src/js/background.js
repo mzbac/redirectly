@@ -38,22 +38,22 @@ const onBeforeSendHeadersCallback = e => {
   }
 };
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (!sender.tab) {
     if (request.redirctly) {
       redirctlyConfig = { ...request.redirctly };
-      chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestCallback);
-      chrome.webRequest.onBeforeSendHeaders.removeListener(
+      browser.webRequest.onBeforeRequest.removeListener(onBeforeRequestCallback);
+      browser.webRequest.onBeforeSendHeaders.removeListener(
         onBeforeSendHeadersCallback
       );
 
       if (request.redirctly.enable) {
-        chrome.webRequest.onBeforeRequest.addListener(
+        browser.webRequest.onBeforeRequest.addListener(
           onBeforeRequestCallback,
           filter,
           ["blocking"]
         );
-        chrome.webRequest.onBeforeSendHeaders.addListener(
+        browser.webRequest.onBeforeSendHeaders.addListener(
           onBeforeSendHeadersCallback,
           filter,
           ["blocking", "requestHeaders"]

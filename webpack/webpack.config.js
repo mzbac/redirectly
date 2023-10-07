@@ -1,5 +1,6 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const fileExtensions = [
     "jpg",
@@ -23,6 +24,8 @@ module.exports = {
     output: {
         path: path.join(__dirname, "../dist"),
         filename: "[name].js",
+        clean: true,
+        assetModuleFilename: '[name][ext]',
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
@@ -31,7 +34,7 @@ module.exports = {
         rules: [
             {
                 test: /(\.css$)/,
-                use: ["style-loader", "css-loader"],
+                use: [MiniCssExtractPlugin.loader, "css-loader", 'postcss-loader'],
             },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
@@ -71,6 +74,10 @@ module.exports = {
     plugins: [
         new CopyPlugin({
             patterns: [{ from: ".", to: ".", context: "public" }],
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css',
         }),
     ],
 };

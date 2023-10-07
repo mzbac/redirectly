@@ -14,6 +14,7 @@ interface HeaderType {
     enabled: boolean;
     name: string;
     value: string;
+    host: string;
 }
 
 
@@ -83,7 +84,7 @@ const MyForm: FC = () => {
             ))}
             <div className="flex mt-4">
                 <button
-                    className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg mr-2 w-1/2"
+                    className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg mr-2 w-1/2 hover:bg-blue-500 hover:text-white hover:border-transparent"
                     onClick={() => {
                         setOverrides([...overrides as OverrideType[], { enabled: false, from: '', to: '' }]);
                     }}
@@ -91,9 +92,9 @@ const MyForm: FC = () => {
                     <span className="material-icons-outlined">Add redirects</span>
                 </button>
                 <button
-                    className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg w-1/2"
+                    className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg w-1/2 hover:bg-blue-500 hover:text-white hover:border-transparent"
                     onClick={() => {
-                        setHeaders([...headers as HeaderType[], { enabled: false, name: '', value: '' }]);
+                        setHeaders([...headers as HeaderType[], { enabled: false, name: '', value: '', host: '' }]);
                     }}
                 >
                     <span className="material-icons-outlined">Add headers</span>

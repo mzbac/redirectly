@@ -3,8 +3,8 @@ import React, { FC } from "react";
 interface HeaderProps {
     id: number;
     onDelete: (id: number) => void;
-    header: { enabled: boolean; name: string; value: string };
-    setHeader: (id: number, header: Partial<{ enabled: boolean; name: string; value: string }>) => void;
+    header: { enabled: boolean; name: string; value: string, host: string };
+    setHeader: (id: number, header: Partial<{ enabled: boolean; name: string; value: string, host: string }>) => void;
 }
 
 const Header: FC<HeaderProps> = ({ id, onDelete, header, setHeader }) => {
@@ -42,6 +42,18 @@ const Header: FC<HeaderProps> = ({ id, onDelete, header, setHeader }) => {
                         setHeader(id, { value: e.target.value });
                     }}
                     className="border border-gray-300 rounded-lg px-4 py-2 w-full text-lg"
+                />
+            </div>
+            <div className="flex-grow mr-4">
+                <input
+                    type="text"
+                    value={header.host}
+                    onChange={(e) => {
+                        setHeader(id, { host: e.target.value });
+                    }}
+                    placeholder="default host: *://*/*"
+                    className="border border-gray-300 rounded-lg px-4 py-2 w-full text-lg"
+
                 />
             </div>
             <div className="flex items-center">

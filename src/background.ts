@@ -8,6 +8,7 @@ interface Header {
     enabled: boolean;
     name: string;
     value: string;
+    host?: string
 }
 
 interface RedirctlyConfig {
@@ -79,7 +80,7 @@ const generateRules = (config: RedirctlyConfig): chrome.declarativeNetRequest.Ru
                     requestHeaders: [{ header: header.name, operation: 'set', value: header.value }]
                 } as chrome.declarativeNetRequest.RuleAction,
                 condition: {
-                    urlFilter: '*://*/*',
+                    urlFilter: header.host ? header.host : '*://*/*',
                     resourceTypes: allResourceTypes
                 }
             });

@@ -30,7 +30,7 @@ const Header: FC<HeaderProps> = ({ id, onDelete, header, setHeader }) => {
                     onChange={(e) => {
                         setHeader(id, { name: e.target.value });
                     }}
-                    className="border border-gray-300 rounded-lg px-2 py-1 w-full"
+                    className="border border-gray-300 rounded-lg px-4 py-2 w-full text-lg"
                 />
             </div>
             <div className="flex-grow mr-4">
@@ -41,7 +41,7 @@ const Header: FC<HeaderProps> = ({ id, onDelete, header, setHeader }) => {
                     onChange={(e) => {
                         setHeader(id, { value: e.target.value });
                     }}
-                    className="border border-gray-300 rounded-lg px-2 py-1 w-full"
+                    className="border border-gray-300 rounded-lg px-4 py-2 w-full text-lg"
                 />
             </div>
             <div className="flex items-center">
@@ -49,9 +49,9 @@ const Header: FC<HeaderProps> = ({ id, onDelete, header, setHeader }) => {
                     onClick={() => {
                         onDelete(id);
                     }}
-                    className="bg-red-500 text-white rounded-full p-2"
+                    className="bg-gray-300 text-black rounded-full h-8 w-8 flex items-center justify-center hover:bg-gray-400"
                 >
-                    <span className="material-icons-outlined">close</span>
+                    x
                 </button>
             </div>
         </div>

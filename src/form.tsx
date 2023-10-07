@@ -61,7 +61,7 @@ const MyForm: FC = () => {
     };
 
     return (
-        <div className="p-4">
+        <div className="p-4 w-form mx-auto">
             <div className="flex items-center mb-4">
                 <label className="mr-4">Enable</label>
                 <input
@@ -88,7 +88,7 @@ const MyForm: FC = () => {
                         setOverrides([...overrides as OverrideType[], { enabled: false, from: '', to: '' }]);
                     }}
                 >
-                    <span className="material-icons-outlined">add</span> Add redirects
+                    <span className="material-icons-outlined">Add redirects</span>
                 </button>
                 <button
                     className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg w-1/2"
@@ -96,7 +96,7 @@ const MyForm: FC = () => {
                         setHeaders([...headers as HeaderType[], { enabled: false, name: '', value: '' }]);
                     }}
                 >
-                    <span className="material-icons-outlined">add</span> Add headers
+                    <span className="material-icons-outlined">Add headers</span>
                 </button>
             </div>
         </div>

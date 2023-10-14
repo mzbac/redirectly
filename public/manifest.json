@@ -1,7 +1,7 @@
 {
     "name": "Redirectly",
     "description": "Web debug tool to override webRequest",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "manifest_version": 3,
     "icons": {
         "128": "images/logo-128.png"

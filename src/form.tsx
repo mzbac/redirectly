@@ -1,4 +1,4 @@
-import React, { useEffect, FC } from "react";
+import React, { useEffect, FC, ReactNode } from "react";
 import { useLocalStorage } from "react-use";
 
 import Override from "./override";
@@ -17,6 +17,14 @@ interface HeaderType {
     host: string;
 }
 
+const Section: FC<{ title: string, children: ReactNode }> = ({ title, children }) => (
+    <div className="my-4">
+        <h3 className="text-lg font-semibold mb-2">{title}</h3>
+        <div className="bg-gray-50 p-4 rounded">
+            {children}
+        </div>
+    </div>
+);
 
 const MyForm: FC = () => {
     const [enable, setEnable] = useLocalStorage("redirectly-enable", false);
@@ -64,42 +72,36 @@ const MyForm: FC = () => {
     return (
         <div className="p-4 w-form mx-auto">
             <div className="flex items-center mb-4">
-                <label className="mr-4">Enable</label>
+                <label className="mr-4 font-medium text-gray-600">Enable Debugging Tool</label>
                 <input
                     type="checkbox"
                     checked={enable}
-                    onChange={(e) => {
-                        setEnable(e.target.checked);
-                    }}
-                    className="form-checkbox h-4 w-4 text-blue-500"
+                    onChange={(e) => setEnable(e.target.checked)}
+                    className={`form-checkbox h-4 w-4 ${enable ? 'text-blue-500' : 'text-gray-400'}`}
                 />
             </div>
-            {overrides && overrides.length > 0 ? <h3 className="text-lg font-semibold">Redirects:</h3> : null}
-            {overrides && overrides.map((elm, i) => (
-                <Override key={i} id={i} override={elm} setOverride={setOverride} onDelete={deleteOverride} />
-            ))}
-            {headers && headers.length > 0 ? <h3 className="text-lg font-semibold">Headers:</h3> : null}
-            {headers && headers.map((elm, i) => (
-                <Header key={i} id={i} header={elm} setHeader={setHeader} onDelete={deleteHeader} />
-            ))}
-            <div className="flex mt-4">
+            <Section title="Redirects">
+                {overrides?.map((elm, i) => (
+                    <Override key={i} id={i} override={elm} setOverride={setOverride} onDelete={deleteOverride} />
+                ))}
                 <button
-                    className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg mr-2 w-1/2 hover:bg-blue-500 hover:text-white hover:border-transparent"
-                    onClick={() => {
-                        setOverrides([...overrides as OverrideType[], { enabled: false, from: '', to: '' }]);
-                    }}
+                    className="mt-2 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white hover:border-transparent w-full"
+                    onClick={() => setOverrides([...(overrides || []), { enabled: false, from: '', to: '' }])}
                 >
-                    <span className="material-icons-outlined">Add redirects</span>
+                    Add redirects
                 </button>
+            </Section>
+            <Section title="Headers">
+                {headers?.map((elm, i) => (
+                    <Header key={i} id={i} header={elm} setHeader={setHeader} onDelete={deleteHeader} />
+                ))}
                 <button
-                    className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg w-1/2 hover:bg-blue-500 hover:text-white hover:border-transparent"
-                    onClick={() => {
-                        setHeaders([...headers as HeaderType[], { enabled: false, name: '', value: '', host: '' }]);
-                    }}
+                    className="mt-2 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white hover:border-transparent w-full"
+                    onClick={() => setHeaders([...(headers || []), { enabled: false, name: '', value: '', host: '' }])}
                 >
-                    <span className="material-icons-outlined">Add headers</span>
+                    Add headers
                 </button>
-            </div>
+            </Section>
         </div>
     );
 };

@@ -1,6 +1,6 @@
 {
   "name": "redirectly",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "chrome extension for web development ",
   "scripts": {
     "build": "webpack --config webpack/webpack.config.js"
